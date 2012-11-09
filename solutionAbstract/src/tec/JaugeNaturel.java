@@ -20,7 +20,7 @@ package tec;
 
 
 class JaugeNaturel { 
-    protected int valeur;
+    private int valeur;
     private final int MIN;
     private final int MAX;
     
@@ -39,6 +39,8 @@ class JaugeNaturel {
 	/* Le constructeur d'une classe permet d'initialiser l'etat de l'instance creee.
 	 * Son nom correspond toujours au nom de la classe. Il n'y a pas de type de retour.
 	 */
+	if( (MIN==MAX) ||(MAX<MIN))
+	    throw new IllegalArgumentException("Jauge incoherente");
     }
     
     
@@ -86,6 +88,10 @@ class JaugeNaturel {
      */
     public void decrementer() {
 	valeur--; //Erreur corrigée: oubli de décrémenter valeur.
+    }
+    
+    public int valeur() {
+	return valeur;
     }
         
     /**
