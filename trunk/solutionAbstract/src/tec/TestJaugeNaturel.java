@@ -22,6 +22,8 @@ public class TestJaugeNaturel {
 	System.out.print("."); nbTest++;
 	testSuperieurIntervalle();
 	
+	System.out.print("."); nbTest++;
+	testExceptionCasLimites();
 	
 	System.out.println("OK (" + nbTest + ")");
        }
@@ -107,4 +109,14 @@ public class TestJaugeNaturel {
 	assert(MaJauge2.estRouge());    
 
     }
+    public void testExceptionCasLimites(){
+
+	//patérible
+    try {
+	JaugeNaturel inverse = new JaugeNaturel(78,13,55);
+	JaugeNaturel egale = new JaugeNaturel(-42,-42,-42);
+    } catch (IllegalArgumentException e){}
+        
+	
+    }	
 }

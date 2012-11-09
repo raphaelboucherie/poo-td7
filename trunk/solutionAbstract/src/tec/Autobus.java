@@ -70,7 +70,7 @@ public class Autobus extends Bus implements Transport {
 	}while(tailleInit!=Passagers.size());
     }
     public String toString() {
-	return "[arret:"+nbArret+",assis:"+jaugeDebout.valeur+",debout:"+jaugeAssis.valeur+"]";
+	return "[arret:"+nbArret+",assis:"+jaugeDebout.valeur()+",debout:"+jaugeAssis.valeur()+"]";
     }
     
 }
