@@ -24,5 +24,39 @@
 \emph{\'Equipe Optiplex \\ Yannick Levif, Joffrey Diebold, Mohamed Akdim, Jérôme Le Bot}
 \end{flushleft}
 \section{Gestion d’erreurs et instanciation}
+
+Les cas limites de l'instanciation de JaugeNaturel sont rencontrés lorsque $VigieMax = VigieMin = Valeur$ ou $VigieMax < VigieMin$.\\
+
+\begin{verbatim}
+public void testExceptionCasLimites() { JaugeNaturel inverse = new JaugeNaturel(78, 13, 55); JaugeNaturel egale = new JaugeNaturel(-42, -42, -42); }
+\end{verbatim}
+
+\textit{Nous avons pris le soin de modifier le code de l'instanciation de la JaugeNaturel egale car le résultat est incohérent dans le cas donné dans l'énoncé.}
+
+Le résultat de l'instanciation est : \\
+Pour la Jauge inverse: \\
+estRouge(): true
+estVert(): false
+estBleu(): true
+L'état est donc bien incohérent.
+
+Pour la Jauge egale:
+estRouge(): true
+estVert(): false
+estBleu(): true
+L'état est donc bien incohérent.
+
 \subsection{Lever une exception}
+
+On ne relève que la première exception car cela fonctionne comme le mécanisme des assertions : la première exception est relevée mais non capturée.
+
+\subsection{Capturer une exception}
+
+Pour vérifier que les deux exceptions sont levées, il est nécessaire de créer un bloc try{...}catch(){...} par test.
+Chaque bloc try catch permet de gérer l'exception déclenchée dans le try et de la gérer grâce à l'instruction du bloc catch.
+Dans la partie catch les variables n'ont pas de valeur car si on passe dans le bloc catch, cela signifie que l'instanciation de JaugeNaturel à échoué.  
+
+
+
+
 \end{document}

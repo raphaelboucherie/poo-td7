@@ -8,5 +8,5 @@ Bleu :true
 La Jauge egale
 Rouge :true
 Vert:false
-Bleu :false
+Bleu :true
 état incohérent aussi.
