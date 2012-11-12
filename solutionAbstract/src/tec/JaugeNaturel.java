@@ -33,14 +33,14 @@ class JaugeNaturel {
      * @param depart   valeur initiale de la jauge.
      */
     public JaugeNaturel(int vigieMin, int vigieMax, int depart) {
-	valeur = depart;
-	MIN = vigieMin;
-	MAX = vigieMax;
-	/* Le constructeur d'une classe permet d'initialiser l'etat de l'instance creee.
-	 * Son nom correspond toujours au nom de la classe. Il n'y a pas de type de retour.
-	 */
-	if( (MIN==MAX) ||(MAX<MIN))
+	if( (vigieMin==vigieMax && vigieMax==depart) || (vigieMax<vigieMin))
 	    throw new IllegalArgumentException("Jauge incoherente");
+	else {
+	    valeur = depart;
+	    MIN = vigieMin;
+	    MAX = vigieMax;
+	}
+	
     }
     
     

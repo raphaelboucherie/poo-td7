@@ -1,6 +1,6 @@
 package tec;
 
-abstract class Bus {
+abstract class Bus throws IllegalStateException {
     abstract boolean aPlaceAssise();
     abstract boolean aPlaceDebout();
     

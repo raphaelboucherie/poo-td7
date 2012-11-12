@@ -5,14 +5,14 @@ public class Autobus extends Bus implements Transport {
     private JaugeNaturel jaugeAssis; 
     private JaugeNaturel jaugeDebout;
     private int nbArret;
-    private ArrayList<Passager> Passagers; 
+    private ArrayList<Passager> Passagers new ArrayList<Passager>();
+    private Iterator<Passager> iterateur = Passagers.iterator();
     
     public Autobus(int nb_assis, int nb_debout) {
 	
 	jaugeAssis = new JaugeNaturel(0,nb_assis,0);
 	jaugeDebout  = new JaugeNaturel(0,nb_debout,0);
 	nbArret=0;
-	Passagers = new ArrayList<Passager>();
     }
     
     public boolean aPlaceAssise() {
@@ -24,12 +24,20 @@ public class Autobus extends Bus implements Transport {
     }
     
     public void demanderPlaceAssise(Passager p) {
+	while(iterateur.hasNext())
+	    if(iterateur.next()==p)
+		throw new IllegalStateException("Passager deja présent bus");
+	
 	jaugeAssis.incrementer();
 	p.accepterPlaceAssise();
 	Passagers.add(p);
     }
     
     public void demanderPlaceDebout(Passager p) {
+	while(iterateur.hasNext())
+	    if(iterateur.next()==p)
+		throw new IllegalStateException("Passager deja présent bus");
+	
 	jaugeDebout.incrementer();
 	p.accepterPlaceDebout();
 	Passagers.add(p);
@@ -48,17 +56,24 @@ public class Autobus extends Bus implements Transport {
     }
     
     public void demanderChangerEnDebout(Passager p) {
-	jaugeAssis.decrementer();
-	jaugeDebout.incrementer();
-	p.accepterPlaceDebout();
+	if(p.estDebout())
+	    throw new IllegalStateException("Deja Debout");
+	else {
+	    jaugeAssis.decrementer();
+	    jaugeDebout.incrementer();
+	    p.accepterPlaceDebout();
+	}
     }
-    
     public void demanderChangerEnAssis(Passager p) {
-	jaugeAssis.incrementer();
-	jaugeDebout.decrementer();
-	p.accepterPlaceAssise();
+	if(p.estAssis())
+	    throw new IllegalStateException("Deja assis");
+	else {
+	
+	    jaugeAssis.incrementer();
+	    jaugeDebout.decrementer();
+	    p.accepterPlaceAssise();
+	}
     }
-    
     public void allerArretSuivant() { 
 	nbArret++;
 	int tailleInit;/*regle le problème quand plusieurs

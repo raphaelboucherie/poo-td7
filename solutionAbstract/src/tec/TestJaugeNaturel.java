@@ -13,11 +13,11 @@ public class TestJaugeNaturel {
 	System.out.print("."); nbTest++;
 	testInferieurIntervalle();
 	
-	System.out.print("."); nbTest++;
-	testLimiteVigieMaxInferieurVigieMin();
+	//System.out.print("."); nbTest++;
+	//testLimiteVigieMaxInferieurVigieMin();
 	
-	System.out.print("."); nbTest++;
-	testMaxEgaleMin();
+	//System.out.print("."); nbTest++;
+	//testMaxEgaleMin();
 	
 	System.out.print("."); nbTest++;
 	testSuperieurIntervalle();
@@ -68,7 +68,7 @@ public class TestJaugeNaturel {
 	assert(!MaJauge2.estVert());
 	assert(!MaJauge2.estRouge());    
     }
-    public void testLimiteVigieMaxInferieurVigieMin() {
+    /* public void testLimiteVigieMaxInferieurVigieMin() {
 	
 	// vigieMax < depart < vigieMin. L'état est-il cohérent ?  Non  
 	
@@ -76,7 +76,7 @@ public class TestJaugeNaturel {
 	assert(MaJauge.estBleu());
 	assert(!MaJauge.estVert());
 	assert(MaJauge.estRouge());    
-    }
+	}
     public void testMaxEgaleMin() {
 
 	//1) vigieMin = VigieMax < depart
@@ -92,7 +92,7 @@ public class TestJaugeNaturel {
 	assert(MaJauge2.estRouge());    
 	
 	//L'état est-il cohérent ? Le 1) oui mais le 2) ne l'est pas.
-    }
+	}*/
 
     public void testSuperieurIntervalle() {
 
@@ -110,13 +110,15 @@ public class TestJaugeNaturel {
 
     }
     public void testExceptionCasLimites(){
-
-	//patérible
-    try {
-	JaugeNaturel inverse = new JaugeNaturel(78,13,55);
-	JaugeNaturel egale = new JaugeNaturel(-42,-42,-42);
-    } catch (IllegalArgumentException e){}
-        
 	
+	try {
+	    JaugeNaturel inverse = new JaugeNaturel(78,13,55);
+	    assert(false);
+	} catch (IllegalArgumentException e){}
+	
+	try {
+	    JaugeNaturel egale = new JaugeNaturel(-42,-42,-42);
+	    assert(false);
+	} catch (IllegalArgumentException e){}
     }	
 }
