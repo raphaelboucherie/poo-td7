@@ -28,10 +28,15 @@ public class TestAutobus {
     }
     
     private void testConstructeur() {
-	Bus bus = new Autobus(10,0);
+	FauxPassager f = new FauxPassager("a",1);
+	
+	Bus bus = new Autobus(10,1);
 	assert bus.aPlaceAssise();
+	bus.demanderPlaceDebout(f);
 	assert !bus.aPlaceDebout();
-	Bus bus2 = new Autobus(0,10);
+	
+	Bus bus2 = new Autobus(1,10);
+	bus2.demanderPlaceAssise(f);
 	assert !bus2.aPlaceAssise();
 	assert bus2.aPlaceDebout();
     }

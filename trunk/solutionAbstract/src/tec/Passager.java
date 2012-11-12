@@ -1,6 +1,6 @@
 package tec;
 
-abstract class Passager {
+abstract class Passager throws IllegalStateException {
     abstract String nom();
     abstract boolean estDehors();
     
