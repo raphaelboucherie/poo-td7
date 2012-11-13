@@ -114,7 +114,10 @@ public class TestAutobus {
 	bus.demanderPlaceDebout(faux[4]);
 	
 	//test d'interaction 
-	bus.allerArretSuivant();
+	try {
+	    bus.allerArretSuivant();
+	}catch(TecInvalidException e){}
+	
        	for (int i=1;i<=4;i++)
 	    assert "nouvelArret" == faux[i].messages.getLast();
 	

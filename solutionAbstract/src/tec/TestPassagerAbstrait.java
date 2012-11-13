@@ -35,7 +35,7 @@ abstract class TestPassagerAbstrait {
    
     
     void testFabrication(){
-	PassagerAbstrait  p = creerPassager("Nom",0);
+	PassagerAbstrait  p = creerPassager("Nom",1);
 	assert "Nom"==p.nom();
 	assert p.estDehors();
 	assert !p.estAssis();
@@ -71,7 +71,10 @@ abstract class TestPassagerAbstrait {
 	PassagerAbstrait p = creerPassager("zzz",4);
 	FauxBus f = new FauxBus(2,4);
 	f.status = FauxBus.VIDE;
-	p.monterDans(f);
+	try {
+	    p.monterDans(f);
+	} catch(TecInvalidException e){}
+	
 	assert "demanderPlaceAssise" == f.messages.getLast() || 
 	       "demanderPlaceDebout" == f.messages.getLast();
     }

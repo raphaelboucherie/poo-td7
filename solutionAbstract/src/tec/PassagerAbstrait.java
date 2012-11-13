@@ -9,7 +9,10 @@ public abstract class PassagerAbstrait extends Passager implements Usager {
     Caractere caractere;
     
     public PassagerAbstrait(String nom, int destination) {
-	
+	if(destination<=0)
+	    throw new IllegalArgumentException("Destination invalide");
+	if(nom=="")
+	    throw new IllegalArgumentException("Nom invalide"); 
 	this.destination=destination;
 	monEtat= new EtatPassager(Etat.DEHORS);
 	this.nom = nom;
@@ -47,9 +50,15 @@ public abstract class PassagerAbstrait extends Passager implements Usager {
 	this.monEtat=monEtat.DEBOUT;
     }
     
-    final public void monterDans(Transport t){
+    final public void monterDans(Transport t) throws TecInvalidException {
 	Bus b = (Bus) t;
-	this.choixPlaceMontee(b);
+	if( !(t instanceof Bus))
+	    throw new TecInvalidException("Echec Conversion") ;
+	try {
+	    this.choixPlaceMontee(b);
+	} catch(IllegalStateException e){
+	    throw new TecInvalidException("choixPlaceMontee", e);
+	}
     }
     
     final public void nouvelArret(Bus b, int numeroArret){
