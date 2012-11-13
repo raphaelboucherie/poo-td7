@@ -1,5 +1,6 @@
 package tec;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Autobus extends Bus implements Transport {
     private JaugeNaturel jaugeAssis; 
@@ -25,8 +26,10 @@ public class Autobus extends Bus implements Transport {
     }
     
     public void demanderPlaceAssise(Passager p) {
-	while(iterateur.hasNext())
-	    if(iterateur.next().equals(p))
+	//	while(iterateur.hasNext())
+	//  if(iterateur.next().equals(p))
+	for(int i=0;i<Passagers.size();i++)
+	    if (Passagers.get(i)==p)
 		throw new IllegalStateException("Passager deja présent bus");
 	jaugeAssis.incrementer();
 	p.accepterPlaceAssise();
@@ -34,8 +37,10 @@ public class Autobus extends Bus implements Transport {
     }
     
     public void demanderPlaceDebout(Passager p) {
-	while(iterateur.hasNext())
-	    if(iterateur.next()==p)
+	//while(iterateur.hasNext())
+	//  if(iterateur.next()==p)
+	for(int i=0;i<Passagers.size();i++)
+	    if (Passagers.get(i)==p)
 		throw new IllegalStateException("Passager deja présent bus");
 	
 	jaugeDebout.incrementer();
@@ -45,8 +50,10 @@ public class Autobus extends Bus implements Transport {
     
     public void demanderSortie(Passager p) {
 	boolean dehors=true;
-	while(iterateur.hasNext())
-	    if(iterateur.next()==p)
+	//while(iterateur.hasNext())
+	//  if(iterateur.next()==p)
+	for(int i=0;i<Passagers.size();i++)
+	    if (Passagers.get(i)==p)
 		dehors=false;
 	if (dehors)
 	    throw new IllegalStateException("Passager deja présent bus");
@@ -84,15 +91,18 @@ public class Autobus extends Bus implements Transport {
 	nbArret++;
 	int tailleInit;/*regle le problème quand plusieurs
 			 passagers descendent au même arret*/
-	try {
+	
 	    do{
 		tailleInit=Passagers.size();
 		for(int i=0;i<Passagers.size();i++)
-		    Passagers.get(i).nouvelArret(this,nbArret);
+		    try {
+			Passagers.get(i).nouvelArret(this,nbArret);
+		    } catch (IllegalStateException e){
+			throw new TecInvalidException("nouvelArret",e);
+		    }
 	    }while(tailleInit!=Passagers.size());
-	} catch (IllegalStateException e){
-	    throw new TecInvalidException("nouvelArret",e);
-	}
+	    
+	    
     }
     public String toString() {
 	return "[arret:"+nbArret+",assis:"+jaugeDebout.valeur()+",debout:"+jaugeAssis.valeur()+"]";
