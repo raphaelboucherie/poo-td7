@@ -1,6 +1,6 @@
 package tec;
 
-abstract class Passager throws IllegalStateException {
+abstract class Passager {
     abstract String nom();
     abstract boolean estDehors();
     
@@ -12,5 +12,5 @@ abstract class Passager throws IllegalStateException {
     abstract void accepterPlaceDebout();
     
     abstract void nouvelArret(Bus b, int numeroArret);
-    abstract void monterDans(Transport t);
+    abstract void monterDans(Transport t)  throws TecInvalidException;
 }

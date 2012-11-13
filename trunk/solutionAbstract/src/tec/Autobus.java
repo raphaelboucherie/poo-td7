@@ -1,15 +1,16 @@
 package tec;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Autobus extends Bus implements Transport {
     private JaugeNaturel jaugeAssis; 
     private JaugeNaturel jaugeDebout;
     private int nbArret;
-    private ArrayList<Passager> Passagers new ArrayList<Passager>();
+    private ArrayList<Passager> Passagers= new ArrayList<Passager>();
     private Iterator<Passager> iterateur = Passagers.iterator();
     
     public Autobus(int nb_assis, int nb_debout) {
-	
+	if(nb_assis <= 0 || nb_debout <= 0)
+	    throw new IllegalArgumentException("Nb Assis/Debout initiale <=0");
 	jaugeAssis = new JaugeNaturel(0,nb_assis,0);
 	jaugeDebout  = new JaugeNaturel(0,nb_debout,0);
 	nbArret=0;
@@ -25,9 +26,8 @@ public class Autobus extends Bus implements Transport {
     
     public void demanderPlaceAssise(Passager p) {
 	while(iterateur.hasNext())
-	    if(iterateur.next()==p)
+	    if(iterateur.next().equals(p))
 		throw new IllegalStateException("Passager deja présent bus");
-	
 	jaugeAssis.incrementer();
 	p.accepterPlaceAssise();
 	Passagers.add(p);
@@ -44,11 +44,17 @@ public class Autobus extends Bus implements Transport {
     }
     
     public void demanderSortie(Passager p) {
-	if (p.estDebout()){
+	boolean dehors=true;
+	while(iterateur.hasNext())
+	    if(iterateur.next()==p)
+		dehors=false;
+	if (dehors)
+	    throw new IllegalStateException("Passager deja présent bus");
+	else if (p.estDebout()){
 	    jaugeDebout.decrementer();
 	    p.accepterSortie();
 	}
-	if (p.estAssis()){
+	else if (p.estAssis()){
 	    jaugeAssis.decrementer();
 	    p.accepterSortie();
 	}
@@ -74,15 +80,19 @@ public class Autobus extends Bus implements Transport {
 	    p.accepterPlaceAssise();
 	}
     }
-    public void allerArretSuivant() { 
+    public void allerArretSuivant() throws TecInvalidException { 
 	nbArret++;
 	int tailleInit;/*regle le problème quand plusieurs
 			 passagers descendent au même arret*/
-	do{
-	    tailleInit=Passagers.size();
-	    for(int i=0;i<Passagers.size();i++)
-		Passagers.get(i).nouvelArret(this,nbArret);
-	}while(tailleInit!=Passagers.size());
+	try {
+	    do{
+		tailleInit=Passagers.size();
+		for(int i=0;i<Passagers.size();i++)
+		    Passagers.get(i).nouvelArret(this,nbArret);
+	    }while(tailleInit!=Passagers.size());
+	} catch (IllegalStateException e){
+	    throw new TecInvalidException("nouvelArret",e);
+	}
     }
     public String toString() {
 	return "[arret:"+nbArret+",assis:"+jaugeDebout.valeur()+",debout:"+jaugeAssis.valeur()+"]";
