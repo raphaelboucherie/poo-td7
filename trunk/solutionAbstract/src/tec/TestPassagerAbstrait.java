@@ -28,7 +28,10 @@ abstract class TestPassagerAbstrait {
 	
 	System.out.print('.'); nbTest++;
 	testChoixPlaceMontee();
-    	
+
+	System.out.print('.'); nbTest++;
+	testException();
+
 	System.out.println("OK (" + nbTest + ")");
     }
     
@@ -79,4 +82,21 @@ abstract class TestPassagerAbstrait {
 	       "demanderPlaceDebout" == f.messages.getLast();
     }
     
+    void testException(){
+	
+	Transport t = new Transport() {
+		
+		public void allerArretSuivant() throws TecInvalidException{}
+		public boolean aPlaceAssise(){return false;}
+		public boolean aPlaceDebout(){return false;}
+	    };
+	PassagerAbstrait p = creerPassager("zz",5);
+	try {
+	    p.monterDans(t);
+	    assert(false);
+	}catch (TecInvalidException e){
+	    System.out.println("Exception Levée! (Invalid..)");
+	}
+	
+    }
 }

@@ -51,9 +51,10 @@ public abstract class PassagerAbstrait extends Passager implements Usager {
     }
     
     final public void monterDans(Transport t) throws TecInvalidException {
-	Bus b = (Bus) t;
 	if( !(t instanceof Bus))
 	    throw new TecInvalidException("Echec Conversion") ;
+	Bus b = (Bus) t;
+	
 	try {
 	    this.choixPlaceMontee(b);
 	} catch(IllegalStateException e){

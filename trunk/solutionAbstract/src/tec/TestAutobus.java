@@ -23,7 +23,10 @@ public class TestAutobus {
 
 	System.out.print('.'); nbTest++;
 	testArretSuivant();
-
+	
+	System.out.print('.'); nbTest++;
+	testException();
+	
 	System.out.println("OK (" + nbTest + ")"); 
     }
     
@@ -149,8 +152,6 @@ public class TestAutobus {
 	assert !bus2.aPlaceAssise();
     }
     
-    
-    
     void testFaussaire() {
 	FauxPassager f = new FauxPassager("aa",3);
 	assert "Nom1"==f.nom();
@@ -181,6 +182,23 @@ public class TestAutobus {
 	assert "nouvelArret" == f.messages.getLast();
 	f.monterDans(null);
 	assert "monterDans" == f.messages.getLast();
+    }
+  
+    void testException(){
+	Bus b= new Autobus(2,2);
+	FauxPassager f=  new FauxPassager("aa",3){
+		
+		public void nouvelArret(Bus bus, int numeroArret) {
+		    throw new IllegalStateException("No Arret Invalide");
+		}
+	    };
+	b.demanderPlaceAssise(f);
+	try{
+	    b.allerArretSuivant();
+	    assert(false);
+	} catch(TecInvalidException e){
+	    System.out.println("Exception Levée! Illegal->Invalid");
+	}
     }
     
 }
